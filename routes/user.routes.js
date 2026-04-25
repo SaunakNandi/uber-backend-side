@@ -17,4 +17,5 @@ router.post('/verify-otp',userController.verifyOTP)
 router.post('/login',[body('mobile').isNumeric().withMessage('Invalid Phone Number')],userController.loginUser)
 router.get('/profile',authMiddleware.authUser,userController.getUserProfile)
 router.post('/logout',authMiddleware.authUser,userController.logoutUser)
+router.get('/user-ride-history',authMiddleware.authUser,userController.getUserRideDetails)
 module.exports=router
