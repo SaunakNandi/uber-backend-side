@@ -33,6 +33,8 @@ module.exports.registerCaptain=async(req,res,next)=>{
     }),'EX', 600)
     // await redis.set()
     const otpApi=process.env.TWOFACTOR_API
+  const otp = Math.floor(100000 + Math.random() * 900000);
+
     const receiverMobile=`+91${mobile}`
     try {
         const response=await axios.get(`https://2factor.in/API/V1/${otpApi}/SMS/${receiverMobile}/${otp}/OTP1`)

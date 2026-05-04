@@ -46,7 +46,10 @@ const rideSchema = new mongoose.Schema({
     signature: {
         type: String,
     },
+    completedOn:{
+        type:Date,
 
+    },
     otp: {  
         type: String,
         select: false,  // select: false so that otp is not sent to the driver/captain 

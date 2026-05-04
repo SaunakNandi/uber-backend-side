@@ -143,6 +143,7 @@ module.exports.getUserProfile = async (req, res, next) => {
 module.exports.getUserRideDetails = async (req, res, next) => {
   const { page } = req.query;
   const uid=req.user._id
+  console.log("uid ",uid)
   if (!uid) return res.status(404).json({ message: "user not found for ride" });
   const skip = (page - 1) * 20;
 

@@ -18,12 +18,7 @@ router.post('/register',[
 ],
     captainController.registerCaptain
 )
-router.post('/login',[
-        body('email').isEmail().withMessage('Invalid Email'),
-        body('password').isLength({min:6}).withMessage('Password Invalid'),
-    ],
-    captainController.loginCaptain
-)
+
 router.post('/login-otp',captainController.verifyLoginOtp)
 router.post('/verify-otp',captainController.verifyOTP)
 router.post('/login',[body('mobile').isNumeric().withMessage('Invalid Phone Number')],captainController.loginCaptain)
