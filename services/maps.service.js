@@ -91,7 +91,8 @@ module.exports.getSuggestions=async(input)=>{
     const url=`${process.env.MAPS_URL}/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
     try {
         const response=await axios.get(url)
-        if(response.data.status==='OK')
+        console.log("Response for suggestion ",response)
+        if(response.data.status==="OK")
             return response.data.predictions
         // else
         //     throw new Error('Unable to fetch suggestions')
