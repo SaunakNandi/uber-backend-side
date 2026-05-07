@@ -94,7 +94,7 @@ module.exports.endRide=async({rideId,captain})=>{
 }
 
 module.exports.getRideDetails=async(skip,userId)=>{
-    const data=await rideModel.find({user:userId}).skip(skip).limit(10).select('-otp').populate('captain','fullname').lean()
+    const data=await rideModel.find({user:userId,status:"completed"}).populate('captain','fullname vehicle').skip(skip).limit(20).select('-otp').sort({"completedOn":-1}).lean()
     console.log("getRideDetails ",data)
     const count=await rideModel.countDocuments({user:userId})
     return {data,count}

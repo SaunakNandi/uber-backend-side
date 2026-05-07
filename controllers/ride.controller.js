@@ -107,9 +107,6 @@ module.exports.endRide=async(req,res)=>{
             event:'ride-ended',
             data:ride
         })
-
-        // use socketIo and tell user that ride has been ended
-        
         return res.status(200).json(ride)
     } catch (error) {
         console.log(error)
@@ -124,7 +121,7 @@ module.exports.getDetails=async(req,res)=>{
         const userId=req.user._id
         const skip=(page-1)*10
         const {data,count}=await rideService.getRideDetails(skip,userId) 
-        console.log("getDetails data",data)
+        console.log("getDetails data => ",data)
         return res.status(200).json({data,hasMore:skip+data.length<count})
     } catch (error) {
         console.log('Ride History ',error)

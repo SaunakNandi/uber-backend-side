@@ -157,6 +157,6 @@ module.exports.getUserRideDetails = async (req, res, next) => {
   return res.status(200).json({
     rideData: rideData.data,
     totalPageCount: rideData.count,
-    hasMore:!(skip+20)>rideData.count,
+    hasMore: (rideData.count - (skip+20))>0,
   });
 };

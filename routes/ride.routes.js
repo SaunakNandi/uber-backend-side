@@ -37,5 +37,5 @@ router.post('/end-ride',authMiddleware.authCaptain,
     rideController.endRide
 )
 
-router.get('/ride-history',authMiddleware.authUser,rideController.getDetails)
+// router.get('/ride-history',authMiddleware.authUser,rideController.getDetails)
 module.exports=router
