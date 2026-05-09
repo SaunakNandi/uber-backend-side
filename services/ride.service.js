@@ -93,8 +93,12 @@ module.exports.endRide=async({rideId,captain})=>{
     return ride
 }
 
-module.exports.getRideDetails=async(skip,userId)=>{
-    const data=await rideModel.find({user:userId,status:"completed"}).populate('captain','fullname vehicle').skip(skip).limit(20).select('-otp').sort({"completedOn":-1}).lean()
+module.exports.getRideDetails=async(skip,userId,isCaptain)=>{
+    let data=null
+    if(isCaptain)
+        data=await rideModel.find({captain:userId,status:"completed"}).populate('user','fullname').populate('captain', 'vehicle').skip(skip).limit(20).select('-otp').sort({"completedOn":-1}).lean()
+    else
+        data=await rideModel.find({user:userId,status:"completed"}).populate('captain','fullname vehicle').skip(skip).limit(20).select('-otp').sort({"completedOn":-1}).lean()
     console.log("getRideDetails ",data)
     const count=await rideModel.countDocuments({user:userId})
     return {data,count}

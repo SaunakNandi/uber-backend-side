@@ -6,6 +6,7 @@ const twilio = require('twilio');
 const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 const redis=require('../services/redis.service')
 const { default: axios } = require('axios')
+const rideService = require("../services/ride.service");
 module.exports.registerCaptain=async(req,res,next)=>{
     const {fullname,email,password,vehicle,mobile}=req.body
     
@@ -121,3 +122,24 @@ module.exports.logoutCaptain=async(req,res,next)=>{
     res.clearCookie('token')
     res.status(200).json({message:'Logged Out'})
 }
+
+module.exports.getCaptainRideDetails = async (req, res, next) => {
+  const { page } = req.query;
+  const uid=req.captain._id
+  console.log("uid ",uid)
+  if (!uid) return res.status(404).json({ message: "user not found for ride" });
+  const skip = (page - 1) * 20;
+
+  const rideData = await rideService.getRideDetails(skip, uid,true);
+  console.log("RideData ", rideData);
+
+  if (!rideData.data || rideData.data.length === 0) {
+    return res.status(404).json({ message: "No rides found for this user." });
+  }
+
+  return res.status(200).json({
+    rideData: rideData.data,
+    totalPageCount: rideData.count,
+    hasMore: (rideData.count - (skip+20))>0,
+  });
+};

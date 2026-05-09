@@ -24,5 +24,6 @@ router.post('/verify-otp',captainController.verifyOTP)
 router.post('/login',[body('mobile').isNumeric().withMessage('Invalid Phone Number')],captainController.loginCaptain)
 router.get('/profile',authMiddleware.authCaptain,captainController.getCaptainProfile)
 router.post('/logout',authMiddleware.authCaptain,captainController.logoutCaptain)
+router.get('/captains-ride-history',authMiddleware.authCaptain,captainController.getCaptainRideDetails)
 
 module.exports=router
