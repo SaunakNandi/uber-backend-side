@@ -18,4 +18,5 @@ router.post('/login',[body('mobile').isNumeric().withMessage('Invalid Phone Numb
 router.get('/profile',authMiddleware.authUser,userController.getUserProfile)
 router.post('/logout',authMiddleware.authUser,userController.logoutUser)
 router.get('/user-ride-history',authMiddleware.authUser,userController.getUserRideDetails)
+router.patch('/user-update-profile',authMiddleware.authUser,userController.UpdateUserProfile)
 module.exports=router

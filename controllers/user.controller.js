@@ -133,7 +133,9 @@ module.exports.logoutUser = async (req, res, next) => {
   res.status(200).json({ message: "Logged Out" });
 };
 
-module.exports.getUserProfile = async (req, res, next) => {
+module.exports.
+
+getUserProfile = async (req, res, next) => {
   if (!req.user) return res.status(404).json({ message: "User not found" });
 
   // we will get req.user value from the response of authUser
@@ -160,3 +162,17 @@ module.exports.getUserRideDetails = async (req, res, next) => {
     hasMore: (rideData.count - (skip+20))>0,
   });
 };
+
+module.exports.UpdateUserProfile=async(req,res)=>{
+  try {
+    const uid=req.user._id
+    const {fullname,email}=req.body
+    const updatedUser=await userModel.findByIdAndUpdate(uid,{fullname,email},{runValidators:true,new:true})
+    if(!updatedUser)
+      return res.status(404).json({message:"Profile not found"})
+    return res.status(200).json({message:"Profile data updated"})
+  } catch (error) {
+    console.log("Error at updateUserProfile ",error)
+    return res.status(400).json({message:error})
+  }
+}
