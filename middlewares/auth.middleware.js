@@ -46,7 +46,7 @@ module.exports.authCaptain=async (req,res,next)=>{
         }
         return next()
     } catch (error) {
-        coconsole.log('Problem in auth.middleware authUser', error.message);
+        console.log('Problem in auth.middleware authUser', error.message);
         
         // This is the key: tell the frontend this token is garbage
         return res.status(401).json({ 

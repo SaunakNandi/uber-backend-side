@@ -73,7 +73,7 @@ module.exports.verifyOTP=async(req,res)=>{
     {
         const captain=await captainService.createCaptain(captain_data)
         await redis.del(`otp:${mobile}`)
-        await redis.del(`regsiter:${mobile}`)
+        await redis.del(`register:${mobile}`)
         const token=captain.generateAuthToken()        
         res.cookie('token',token)
         return res.status(200).json({message:'OTP verified',token,captain})
@@ -143,3 +143,19 @@ module.exports.getCaptainRideDetails = async (req, res, next) => {
     hasMore: (rideData.count - (skip+20))>0,
   });
 };
+
+module.exports.UpdateCaptainProfile=async(req,res)=>{
+  try {
+    const uid=req.captain._id
+    const {fullname,email,vehicle}=req.body
+    const updatedCaptain=await captainModel.findByIdAndUpdate(uid,{fullname,email,vehicle},{new:true})
+    if(!updatedCaptain)
+      return res.status(404).json({message:"Profile not found"})
+    return res.status(200).json({message:"Profile data updated"})
+  } catch (error) {
+    console.log("Error at updateUserProfile ",error)
+    return res.status(400).json({message:error})
+  }
+}
+
+

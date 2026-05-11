@@ -39,7 +39,7 @@ const captainSchema=new mongoose.Schema({
     },
     status:{
         type:String,
-        enum:['ative','inactive'],
+        enum:['active','inactive'],
         default:'inactive'
     },
     location:{
@@ -62,9 +62,6 @@ const captainSchema=new mongoose.Schema({
             minLength:[10,"Enter plate no. correctly"],
             uppercase:true,
         },
-        // model:{
-        //     type:String,
-        // },
         capacity:{
             type:Number,
             required:true,
